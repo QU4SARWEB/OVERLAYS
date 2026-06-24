@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QU4SAR — Panel Scoreboard</title>
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<div class="w">
+  <h1>&#10022; QU4SAR &#10022;</h1>
+  <p class="sub">Panel de Control — Scoreboard</p>
+
+  <!-- LIVE PREVIEW -->
+  <div class="preview-wrap" id="preview">
+    <span class="pv-label">Vista previa</span>
+    <span class="pv-mt" id="pv-mt">SCRIM OFICIAL</span>
+    <span class="pv-ms" id="pv-ms">BO3</span>
+    <div class="pv-row">
+      <span class="pv-tn" id="pv-tn1">QU4SAR</span>
+      <span class="pv-sc" id="pv-sc1">0</span>
+      <span class="pv-sep">:</span>
+      <span class="pv-sc2" id="pv-sc2">0</span>
+      <span class="pv-tn" id="pv-tn2">OPPONENT</span>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab act" data-tab="teams"><i data-lucide="users"></i> Equipos</div>
+    <div class="tab" data-tab="match"><i data-lucide="gamepad-2"></i> Partida</div>
+    <div class="tab" data-tab="tools"><i data-lucide="settings-2"></i> Herramientas</div>
+  </div>
+
+  <!-- TAB: TEAMS -->
+  <div class="tab-content act" id="tab-teams">
+    <div class="card">
+      <div class="card-title"><i data-lucide="sword"></i> Equipo 1 — QU4SAR</div>
+      <div class="row">
+        <div class="gr wide"><label>Nombre</label><input type="text" id="t1n" placeholder="QU4SAR"></div>
+      </div>
+      <div class="row">
+        <div class="gr">
+          <label>Score</label>
+          <div class="sc-ctrl">
+            <button data-t="1" data-d="-5" title="-5">&minus;&minus;</button>
+            <button data-t="1" data-d="-1">&minus;</button>
+            <input type="number" id="t1s" value="0" min="0">
+            <button data-t="1" data-d="1">+</button>
+            <button data-t="1" data-d="5" title="+5">++</button>
+          </div>
+          <div class="qbtns">
+            <button data-t="1" data-d="13"><i data-lucide="target"></i> 13 Ronda</button>
+            <button data-t="1" data-d="0"><i data-lucide="refresh-ccw"></i> Reset</button>
+          </div>
+        </div>
+        <div class="gr">
+          <label>Logo</label>
+          <div class="logo-upload">
+            <img id="pr1" src="assets/logos/team1.svg" alt="">
+            <label><i data-lucide="image-plus"></i> Subir<input type="file" accept="image/*" data-p="pr1" data-l="tl1"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i data-lucide="shield"></i> Equipo 2 — OPPONENT</div>
+      <div class="row">
+        <div class="gr wide"><label>Nombre</label><input type="text" id="t2n" placeholder="OPPONENT"></div>
+      </div>
+      <div class="row">
+        <div class="gr">
+          <label>Score</label>
+          <div class="sc-ctrl">
+            <button data-t="2" data-d="-5" title="-5">&minus;&minus;</button>
+            <button data-t="2" data-d="-1">&minus;</button>
+            <input type="number" id="t2s" value="0" min="0">
+            <button data-t="2" data-d="1">+</button>
+            <button data-t="2" data-d="5" title="+5">++</button>
+          </div>
+          <div class="qbtns">
+            <button data-t="2" data-d="13"><i data-lucide="target"></i> 13 Ronda</button>
+            <button data-t="2" data-d="0"><i data-lucide="refresh-ccw"></i> Reset</button>
+          </div>
+        </div>
+        <div class="gr">
+          <label>Logo</label>
+          <div class="logo-upload">
+            <img id="pr2" src="assets/logos/team2.svg" alt="">
+            <label><i data-lucide="image-plus"></i> Subir<input type="file" accept="image/*" data-p="pr2" data-l="tl2"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i data-lucide="maximize-2"></i> Alas de logos</div>
+      <div class="row">
+        <div class="gr wide">
+          <label>Ancho de alas: <span id="wwv">110</span>px</label>
+          <input type="range" id="ww" min="40" max="300" value="110">
+          <div class="rng-hint">m&aacute;s estrecho recorta el logo, m&aacute;s ancho muestra el fondo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: MATCH -->
+  <div class="tab-content" id="tab-match">
+    <div class="card">
+      <div class="card-title"><i data-lucide="info"></i> Informaci&oacute;n de la Partida</div>
+      <div class="row">
+        <div class="gr wide"><label>T&iacute;tulo</label><input type="text" id="mt" placeholder="SCRIM OFICIAL"></div>
+      </div>
+      <div class="row">
+        <div class="gr"><label>Serie</label>
+          <select id="ms">
+            <option value="BO1">BO1</option><option value="BO3" selected>BO3</option><option value="BO5">BO5</option>
+          </select>
+        </div>
+        <div class="gr"><label>Mapa</label>
+          <select id="mm">
+            <option value="">—</option>
+            <option value="ASCENT">Ascent</option>
+            <option value="BIND">Bind</option>
+            <option value="HAVEN">Haven</option>
+            <option value="SPLIT">Split</option>
+            <option value="ICEBOX" selected>Icebox</option>
+            <option value="BREEZE">Breeze</option>
+            <option value="FRACTURE">Fracture</option>
+            <option value="PEARL">Pearl</option>
+            <option value="LOTUS">Lotus</option>
+            <option value="SUNSET">Sunset</option>
+            <option value="ABYSS">Abyss</option>
+            <option value="SUMMIT">Summit</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: TOOLS -->
+  <div class="tab-content" id="tab-tools">
+    <div class="card">
+      <div class="card-title"><i data-lucide="zap"></i> Acciones</div>
+      <div class="actions" style="flex-wrap:wrap">
+        <button class="btn btn-p" id="saveBtn" style="min-width:120px"><i data-lucide="save"></i> Guardar</button>
+        <button class="btn btn-s" id="exportBtn" style="min-width:120px"><i data-lucide="file-json"></i> Exportar JSON</button>
+        <button class="btn btn-s" id="importBtn" style="min-width:120px"><i data-lucide="file-input"></i> Importar JSON</button>
+        <button class="btn btn-s" id="shareBtn" style="min-width:140px"><i data-lucide="link"></i> Copiar Link</button>
+        <button class="btn btn-s" id="openOverlayBtn" style="min-width:120px"><i data-lucide="external-link"></i> Abrir Overlay</button>
+        <button class="btn btn-d" id="resetBtn" style="min-width:120px"><i data-lucide="rotate-ccw"></i> Reset Scores</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i data-lucide="book-open-text"></i> Instrucciones</div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.8">
+        Los cambios se guardan autom&aacute;ticamente en el navegador.<br>
+        Para usar en OBS: abre <code style="background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:4px;color:#BB86FC">overlay.html</code> como <strong>Browser Source</strong> (Local file).<br>
+        El panel y el overlay se sincronizan en tiempo real si ambos est&aacute;n abiertos en el mismo navegador.<br>
+        Usa <strong>Exportar</strong> para obtener un JSON de respaldo.
+      </p>
+    </div>
+  </div>
+
+  <div class="st" id="status"></div>
+</div>
+
+<input type="file" accept=".json" id="importFile">
+
+<script src="js/admin.js"></script>
+</body>
+</html>

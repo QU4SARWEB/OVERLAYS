@@ -1,0 +1,68 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:transparent;font-family:'Segoe UI','Inter','Arial',sans-serif;overflow:hidden;width:100vw;height:100vh}
+
+.sb{position:fixed;top:40px;left:50%;transform:translateX(-50%);min-width:860px;max-width:960px;
+background:linear-gradient(175deg,rgba(8,0,18,0.95),rgba(18,0,40,0.96));
+border:1px solid rgba(107,47,160,0.2);border-radius:14px;padding:0;
+box-shadow:0 8px 50px rgba(0,0,0,0.5),0 0 60px rgba(107,47,160,0.1),inset 0 0 60px rgba(107,47,160,0.02);
+animation:slideDown .55s ease-out;overflow:hidden}
+
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+background:linear-gradient(90deg,transparent 4%,#BB86FC 15%,#FFD700 50%,#E74C3C 85%,transparent 96%)}
+
+.sb::after{content:'';position:absolute;bottom:-1px;left:15%;right:15%;height:1px;
+background:linear-gradient(90deg,transparent,rgba(255,215,0,0.06),transparent)}
+
+.mi{text-align:center;padding:1px 20px 1px;position:relative}
+.mt{font-size:12px;color:#FFD700;text-transform:uppercase;letter-spacing:5px;font-weight:700;
+text-shadow:0 0 25px rgba(255,215,0,0.1);display:block}
+.ms{font-size:10px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:2.5px;
+display:block}
+.ms .dot{color:rgba(255,255,255,0.08);margin:0 5px}
+
+.gd{position:absolute;top:2px;left:50%;transform:translateX(-50%);display:flex;gap:3px}
+.gd span{width:3px;height:3px;border-radius:50%;background:#FFD700;opacity:0.25}
+
+.mid{height:1px;margin:0 16px;
+background:linear-gradient(90deg,transparent 5%,rgba(107,47,160,0.08) 15%,rgba(255,215,0,0.05) 50%,rgba(107,47,160,0.08) 85%,transparent 95%)}
+
+.bot{display:flex;align-items:center;padding:2px 0 4px;min-height:0}
+
+.tp{display:flex;align-items:center;padding:4px 8px;flex:0 0 auto}
+.tn{font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:4px;white-space:nowrap;color:#fff;transition:all .35s}
+.tn.win{text-shadow:0 0 25px rgba(255,255,255,0.2)}
+
+.scr{display:flex;align-items:center;justify-content:center;flex:1;gap:0}
+.sc-inner{display:flex;align-items:center;justify-content:center;gap:16px;padding:0 10px;position:relative}
+
+.sc-inner::before{content:'';position:absolute;top:6px;bottom:6px;left:0;width:1px;
+background:linear-gradient(180deg,transparent,rgba(107,47,160,0.1),transparent)}
+.sc-inner::after{content:'';position:absolute;top:6px;bottom:6px;right:0;width:1px;
+background:linear-gradient(180deg,transparent,rgba(107,47,160,0.1),transparent)}
+
+.sc{font-size:38px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;text-align:center;
+min-width:32px;transition:all .3s;color:#fff}
+.sc-d{font-size:28px;font-weight:300;color:rgba(255,255,255,0.07);line-height:1;user-select:none}
+.sc.ch{animation:pop .35s ease}
+
+.wg{display:flex;align-items:center;flex:0 0 auto;height:48px;overflow:hidden;transition:flex-basis .35s ease}
+.wg.L{clip-path:polygon(0% 0,calc(100% - 20px) 0,100% 100%,20px 100%)}
+.wg.R{clip-path:polygon(20px 0,100% 0,calc(100% - 20px) 100%,0% 100%)}
+
+.wl{width:100%;height:100%;object-fit:cover;display:block;
+-webkit-mask-image:linear-gradient(90deg,transparent 3%,#000 18%,#000 82%,transparent 97%);
+mask-image:linear-gradient(90deg,transparent 3%,#000 18%,#000 82%,transparent 97%)}
+.wl.ch{animation:logoGlow .45s ease}
+
+.stars{position:absolute;top:-15px;left:50%;transform:translateX(-50%);display:flex;gap:3px;pointer-events:none}
+.star{font-size:6px;color:rgba(255,215,0,0.3)}
+
+@keyframes slideDown{from{transform:translateX(-50%) translateY(-25px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+@keyframes pop{0%{transform:scale(1)}30%{transform:scale(1.18)}65%{transform:scale(.95)}100%{transform:scale(1)}}
+@keyframes logoGlow{0%{filter:drop-shadow(0 0 12px rgba(155,89,182,0.15))}50%{filter:drop-shadow(0 0 35px rgba(155,89,182,0.5))}100%{filter:drop-shadow(0 0 12px rgba(155,89,182,0.15))}}
+
+#importZone{position:fixed;top:0;left:0;width:100%;height:100%;z-index:50;display:none;
+align-items:center;justify-content:center;background:rgba(5,0,15,0.5);backdrop-filter:blur(4px)}
+#importZone.show{display:flex}
+#importZone p{color:#fff;font-size:18px;letter-spacing:2px;text-transform:uppercase;
+border:2px dashed rgba(107,47,160,0.4);padding:30px 50px;border-radius:12px;background:rgba(10,0,25,0.8)}
