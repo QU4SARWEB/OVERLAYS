@@ -15,6 +15,7 @@
   }
 
   function save(cb){
+    if(!_mid){_log('No hay partida activa');return}
     var d=gs()
     _sb.from('matches').update(d).eq('id',_mid).then(function(r){
       if(r.error)_log('Error: '+r.error.message)
@@ -23,6 +24,7 @@
   }
 
   function load(mid){
+    if(!mid)return
     _mid=mid
     _sb.from('matches').select('*').eq('id',_mid).single().then(function(r){
       if(r.data)apply(r.data)
@@ -58,8 +60,9 @@
   }
 
   function _log(m){
-    var e=$('status');e.textContent=m;e.className='st ok'
-    clearTimeout(e._t);e._t=setTimeout(function(){e.textContent='';e.className='st'},2000)
+    var e=$('status'),c=$('createStatus')
+    if(e&&e.offsetParent!==null){e.textContent=m;e.className='st ok';clearTimeout(e._t);e._t=setTimeout(function(){e.textContent='';e.className='st'},2000)}
+    if(c){c.textContent=m;c.className='st ok';clearTimeout(c._t);c._t=setTimeout(function(){c.textContent='';c.className='st'},2000)}
   }
 
   function uploadLogo(file,team,cb){
@@ -93,8 +96,8 @@
   document.addEventListener('DOMContentLoaded',function(){
     try{_sb=supabase.createClient(_su,_sk)}catch(e){}
 
-    var h=location.hash.replace('#','')
-    if(h&&_sb){
+    var h=location.hash.replace(/^#/,'')
+    if(h&&/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(h)&&_sb){
       $('createScreen').style.display='none'
       $('adminPanel').style.display='block'
       if(typeof lucide!=='undefined')lucide.createIcons()

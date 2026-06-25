@@ -38,8 +38,8 @@
     try{
       _sb=supabase.createClient(_su,_sk)
       _sb.from('matches').select('*').eq('active',true).single().then(function(r){
-        if(r.data)render(r.data)
-      })
+        if(r.data&&!r.error)render(r.data)
+      }).catch(function(){})
       _ch=_sb.channel('matches-sync')
       _ch.on('postgres_changes',{event:'*',schema:'public',table:'matches'},function(p){
         if(p.new&&p.new.active)render(p.new)
