@@ -22,9 +22,9 @@
           mt:gp('mt')||D.mt,ms:gp('ms')||D.ms,mm:gp('mm')||D.mm,
           ww:parseInt(gp('ww'))||D.ww
         }
-        localStorage.setItem(K,JSON.stringify(h));return h
+        return h
       }
-      var r=localStorage.getItem(K);return r?JSON.parse(r):null
+      return null
     }catch(e){return null}
   }
 
@@ -63,7 +63,7 @@
     P={t1s:d.t1s,t2s:d.t2s,t1n:d.t1n,t2n:d.t2n,t1l:d.t1l,t2l:d.t2l}
   }
 
-  function refresh(){var d=load()||D;render(d)}
+  function refresh(){var d=load();if(d)render(d)}
 
   document.addEventListener('DOMContentLoaded',function(){
     $('wl1').addEventListener('load',function(){this.style.opacity='1'})
@@ -73,10 +73,10 @@
     setInterval(refresh,1200)
     window.addEventListener('storage',function(e){if(e.key===K)refresh()})
     try{var bc=new BroadcastChannel(C);bc.onmessage=function(e){
-      if(e.data&&e.data.type==='update'){localStorage.setItem(K,JSON.stringify(e.data.data));render(e.data.data)}
+      if(e.data&&e.data.type==='update'){render(e.data.data)}
     }}catch(e){}
     window.addEventListener('message',function(e){
-      if(e.data&&e.data.type==='update'){localStorage.setItem(K,JSON.stringify(e.data.data));render(e.data.data)}
+      if(e.data&&e.data.type==='update'){render(e.data.data)}
     })
 
     var iz=$('importZone')
@@ -86,7 +86,7 @@
       e.preventDefault();iz.classList.remove('show')
       var f=e.dataTransfer.files[0];if(!f||!f.name.endsWith('.json'))return
       var r=new FileReader()
-      r.onload=function(ev){try{var d=JSON.parse(ev.target.result);localStorage.setItem(K,JSON.stringify(d));refresh()}catch(e){}}
+      r.onload=function(ev){try{render(JSON.parse(ev.target.result))}catch(e){}}
       r.readAsText(f)
     })
 
@@ -94,9 +94,7 @@
       _sb=supabase.createClient(_su,_sk)
       _ch=_sb.channel('scoreboard')
       _ch.on('broadcast',{event:'update'},function(m){
-        var d=m.payload
-        localStorage.setItem(K,JSON.stringify(d))
-        render(d)
+        render(m.payload)
       })
       _ch.subscribe()
     }}catch(e){}

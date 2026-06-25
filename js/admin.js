@@ -109,6 +109,12 @@
       autosave()
     })
 
+    $('clearBtn').addEventListener('click',function(){
+      localStorage.removeItem(K)
+      $('t1s').value='0';$('t2s').value='0'
+      apply(D);autosave()
+      _log('Datos locales eliminados')
+    })
     $('saveBtn').addEventListener('click',autosave)
     $('resetBtn').addEventListener('click',function(){
       $('t1s').value='0';$('t2s').value='0';autosave()
