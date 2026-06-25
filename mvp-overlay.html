@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QU4SAR — MVP</title>
+<style>
+body{background:transparent;overflow:hidden;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:'Segoe UI',sans-serif}
+.mvp-wrap{text-align:center;padding:36px 60px;background:rgba(8,0,24,0.88);border:1px solid rgba(255,215,0,0.3);border-radius:20px;backdrop-filter:blur(12px);transition:all .4s;max-width:500px}
+.mvp-wrap.hidden{opacity:0;transform:scale(0.8)}
+.mvp-badge{font-size:14px;color:#FFD700;text-transform:uppercase;letter-spacing:4px;margin-bottom:8px}
+.mvp-player{font-size:42px;font-weight:700;color:#fff;margin-bottom:4px}
+.mvp-team{font-size:16px;color:rgba(255,255,255,0.4);margin-bottom:10px}
+.mvp-stat{font-size:18px;color:#BB86FC;background:rgba(187,134,252,0.1);padding:8px 20px;border-radius:10px;display:inline-block;border:1px solid rgba(187,134,252,0.2)}
+</style>
+</head>
+<body>
+<div class="mvp-wrap hidden" id="mvpWrap">
+  <div class="mvp-badge">&#9733; MVP &#9733;</div>
+  <div class="mvp-player" id="mvpPlayer"></div>
+  <div class="mvp-team" id="mvpTeam"></div>
+  <div class="mvp-stat" id="mvpStat"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/mvp-overlay.js"></script>
+</body>
+</html>

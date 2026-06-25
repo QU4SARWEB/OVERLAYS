@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QU4SAR — Timer</title>
+<link rel="stylesheet" href="css/overlay.css">
+<style>
+body{background:transparent;overflow:hidden;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:'Segoe UI',sans-serif}
+.timer-wrap{text-align:center;padding:30px 60px;background:rgba(8,0,24,0.85);border:1px solid rgba(187,134,252,0.3);border-radius:20px;backdrop-filter:blur(12px);min-width:400px}
+.timer-label{font-size:18px;color:rgba(255,255,255,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:3px}
+.timer-display{font-size:96px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:4px}
+.timer-display.running{color:#BB86FC;text-shadow:0 0 40px rgba(187,134,252,0.3)}
+.timer-display.warning{color:#FFD700;text-shadow:0 0 40px rgba(255,215,0,0.3)}
+.timer-display.critical{color:#E74C3C;text-shadow:0 0 40px rgba(231,76,60,0.3)}
+</style>
+</head>
+<body>
+<div class="timer-wrap">
+  <div class="timer-label" id="tlabel">TIEMPO RESTANTE</div>
+  <div class="timer-display" id="tdisplay">05:00</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/timer-overlay.js"></script>
+</body>
+</html>

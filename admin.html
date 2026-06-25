@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QU4SAR — Panel Scoreboard</title>
+<title>QU4SAR — Panel de Control</title>
 <link rel="stylesheet" href="css/admin.css">
 <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -38,9 +38,14 @@
   </div>
 
   <div class="tabs">
-    <div class="tab act" data-tab="teams"><i data-lucide="users"></i> Equipos</div>
+    <div class="tab act" data-tab="teams"><i data-lucide="users"></i> Scoreboard</div>
     <div class="tab" data-tab="match"><i data-lucide="gamepad-2"></i> Partida</div>
-    <div class="tab" data-tab="tools"><i data-lucide="settings-2"></i> Herramientas</div>
+    <div class="tab" data-tab="timer"><i data-lucide="clock"></i> Timer</div>
+    <div class="tab" data-tab="players"><i data-lucide="contact"></i> Players</div>
+    <div class="tab" data-tab="lowerthird"><i data-lucide="align-center"></i> Lower</div>
+    <div class="tab" data-tab="mvp"><i data-lucide="award"></i> MVP</div>
+    <div class="tab" data-tab="break"><i data-lucide="pause-circle"></i> Break</div>
+    <div class="tab" data-tab="tools"><i data-lucide="settings-2"></i> Tools</div>
   </div>
 
   <div class="tab-content act" id="tab-teams">
@@ -144,6 +149,100 @@
             <option value="ABYSS">Abyss</option>
             <option value="SUMMIT">Summit</option>
           </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-timer">
+    <div class="card">
+      <div class="card-title"><i data-lucide="clock"></i> Temporizador</div>
+      <div class="row">
+        <div class="gr wide"><label>Etiqueta</label><input type="text" id="tmLbl" placeholder="TIEMPO RESTANTE"></div>
+      </div>
+      <div class="row">
+        <div class="gr"><label>Duraci&oacute;n (seg)</label><input type="number" id="tmDur" value="300" min="5" max="3600"></div>
+        <div class="gr" style="justify-content:flex-end;gap:8px">
+          <label style="opacity:0;display:block">&nbsp;</label>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-s" id="tmStart"><i data-lucide="play"></i> Iniciar</button>
+            <button class="btn btn-s" id="tmPause"><i data-lucide="pause"></i> Pausar</button>
+            <button class="btn btn-s" id="tmReset"><i data-lucide="rotate-ccw"></i> Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-players">
+    <div class="card">
+      <div class="card-title"><i data-lucide="contact"></i> Jugadores — Equipo 1</div>
+      <div id="p1list"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i data-lucide="contact"></i> Jugadores — Equipo 2</div>
+      <div id="p2list"></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-lowerthird">
+    <div class="card">
+      <div class="card-title"><i data-lucide="align-center"></i> Lower Third</div>
+      <div class="row">
+        <div class="gr wide"><label>T&iacute;tulo</label><input type="text" id="ltTitle" placeholder="Ej: Bienvenidos"></div>
+      </div>
+      <div class="row">
+        <div class="gr wide"><label>Subt&iacute;tulo</label><input type="text" id="ltSubtitle" placeholder="Ej: QU4SAR vs OPPONENT"></div>
+      </div>
+      <div class="row">
+        <div class="gr">
+          <label>&nbsp;</label>
+          <button class="btn btn-p" id="ltShow"><i data-lucide="eye"></i> Mostrar</button>
+          <button class="btn btn-s" id="ltHide"><i data-lucide="eye-off"></i> Ocultar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-mvp">
+    <div class="card">
+      <div class="card-title"><i data-lucide="award"></i> MVP</div>
+      <div class="row">
+        <div class="gr"><label>Jugador</label><input type="text" id="mvpPlayer" placeholder="Nombre"></div>
+        <div class="gr"><label>Equipo</label><input type="text" id="mvpTeam" placeholder="QU4SAR"></div>
+      </div>
+      <div class="row">
+        <div class="gr wide"><label>Estad&iacute;stica</label><input type="text" id="mvpStat" placeholder="24/6/12 | 298 ACS"></div>
+      </div>
+      <div class="row">
+        <div class="gr">
+          <label>&nbsp;</label>
+          <button class="btn btn-p" id="mvpShow"><i data-lucide="eye"></i> Mostrar</button>
+          <button class="btn btn-s" id="mvpHide"><i data-lucide="eye-off"></i> Ocultar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-break">
+    <div class="card">
+      <div class="card-title"><i data-lucide="pause-circle"></i> Pantalla de Pausa</div>
+      <div class="row">
+        <div class="gr wide"><label>T&iacute;tulo</label><input type="text" id="brkTitle" placeholder="BREAK"></div>
+      </div>
+      <div class="row">
+        <div class="gr wide"><label>Subt&iacute;tulo</label><input type="text" id="brkSubtitle" placeholder="Volvemos en un momento"></div>
+      </div>
+      <div class="row">
+        <div class="gr"><label>Temporizador (seg)</label><input type="number" id="brkTimer" value="120" min="0" max="3600"></div>
+        <div class="gr" style="justify-content:flex-end;gap:8px">
+          <label style="opacity:0;display:block">&nbsp;</label>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-p" id="brkShow"><i data-lucide="eye"></i> Mostrar</button>
+            <button class="btn btn-s" id="brkHide"><i data-lucide="eye-off"></i> Ocultar</button>
+            <button class="btn btn-s" id="brkTimerStart"><i data-lucide="play"></i> Timer</button>
+            <button class="btn btn-s" id="brkTimerStop"><i data-lucide="pause"></i> Parar</button>
+          </div>
         </div>
       </div>
     </div>

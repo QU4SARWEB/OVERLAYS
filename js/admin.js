@@ -27,8 +27,90 @@
     if(!mid)return
     _mid=mid
     _sb.from('matches').select('*').eq('id',_mid).single().then(function(r){
-      if(r.data)apply(r.data)
+      if(r.data){apply(r.data);loadOverlays()}
     })
+  }
+
+  function loadOverlays(){
+    _sb.from('timer_state').select('*').eq('match_id',_mid).single().then(function(r){
+      if(r.data){$('tmLbl').value=r.data.label||'';$('tmDur').value=r.data.duration||300}
+      else{_sb.from('timer_state').insert({match_id:_mid,label:'TIEMPO RESTANTE',duration:300,elapsed:0,running:false}).select().single().then(function(ir){if(ir.data){$('tmLbl').value=ir.data.label;$('tmDur').value=ir.data.duration}})}
+    })
+    _sb.from('lower_third').select('*').eq('match_id',_mid).single().then(function(r){
+      if(r.data){$('ltTitle').value=r.data.title||'';$('ltSubtitle').value=r.data.subtitle||''}
+      else{_sb.from('lower_third').insert({match_id:_mid,title:'',subtitle:'',visible:false}).select().single()}
+    })
+    _sb.from('mvp_state').select('*').eq('match_id',_mid).single().then(function(r){
+      if(r.data){$('mvpPlayer').value=r.data.player_name||'';$('mvpTeam').value=r.data.team_name||'';$('mvpStat').value=r.data.stat_line||''}
+      else{_sb.from('mvp_state').insert({match_id:_mid,player_name:'',team_name:'',stat_line:'',visible:false}).select().single()}
+    })
+    _sb.from('break_screen').select('*').eq('match_id',_mid).single().then(function(r){
+      if(r.data){$('brkTitle').value=r.data.title||'';$('brkSubtitle').value=r.data.subtitle||'';$('brkTimer').value=r.data.timer_seconds||120}
+      else{_sb.from('break_screen').insert({match_id:_mid,title:'BREAK',subtitle:'Volvemos en un momento',visible:false,timer_running:false,timer_seconds:120}).select().single()}
+    })
+    _sb.from('players').select('*').eq('match_id',_mid).order('sort_order').then(function(r){
+      if(r.data)renderPlayers(r.data)
+    })
+  }
+
+  function saveTimer(cb){
+    if(!_mid)return
+    var d={label:$('tmLbl').value,duration:parseInt($('tmDur').value,10)||300}
+    _sb.from('timer_state').update(d).eq('match_id',_mid).then(function(r){
+      if(r.error)_log('Error timer: '+r.error.message);else{if(cb)cb();_log('Timer guardado')}
+    })
+  }
+
+  function saveLowerThird(d,cb){
+    if(!_mid)return
+    _sb.from('lower_third').update(d).eq('match_id',_mid).then(function(r){
+      if(r.error)_log('Error lower: '+r.error.message);else{if(cb)cb();_log('Lower third actualizado')}
+    })
+  }
+
+  function saveMvp(d,cb){
+    if(!_mid)return
+    _sb.from('mvp_state').update(d).eq('match_id',_mid).then(function(r){
+      if(r.error)_log('Error MVP: '+r.error.message);else{if(cb)cb();_log('MVP actualizado')}
+    })
+  }
+
+  function saveBreak(d,cb){
+    if(!_mid)return
+    _sb.from('break_screen').update(d).eq('match_id',_mid).then(function(r){
+      if(r.error)_log('Error Break: '+r.error.message);else{if(cb)cb();_log('Break actualizado')}
+    })
+  }
+
+  function renderPlayers(players){
+    var lists=[$('p1list'),$('p2list')]
+    lists[0].innerHTML='';lists[1].innerHTML=''
+    var teams=[[],[]]
+    players.forEach(function(p){if(p.team===1)teams[0].push(p);else teams[1].push(p)})
+    for(var t=0;t<2;t++){
+      for(var i=0;i<5;i++){
+        var p=teams[t][i]||{name:'',kills:0,deaths:0,assists:0,acs:0,id:''}
+        var div=document.createElement('div')
+        div.style.cssText='display:flex;gap:8px;align-items:center;margin-bottom:6px'
+        div.innerHTML='<input type="text" placeholder="Nombre" style="flex:1;min-width:0" value="'+p.name+'"><input type="number" placeholder="K" style="width:44px" value="'+p.kills+'"><input type="number" placeholder="D" style="width:44px" value="'+p.deaths+'"><input type="number" placeholder="A" style="width:44px" value="'+p.assists+'"><input type="number" placeholder="ACS" style="width:52px" value="'+p.acs+'">'
+        div.dataset.team=t+1
+        div.dataset.idx=i
+        div.dataset.pid=p.id||''
+        div.addEventListener('change',function(){upsertPlayer(this.dataset.team,this.dataset.idx,this.dataset.pid)})
+        div.addEventListener('keyup',function(){upsertPlayer(this.dataset.team,this.dataset.idx,this.dataset.pid)})
+        lists[t].appendChild(div)
+      }
+    }
+  }
+
+  function upsertPlayer(team,idx,pid){
+    if(!_mid)return
+    var div=$('p'+team+'list').children[idx]
+    if(!div)return
+    var inputs=div.querySelectorAll('input')
+    var d={match_id:_mid,team:parseInt(team,10),sort_order:parseInt(idx,10),name:inputs[0].value,kills:parseInt(inputs[1].value,10)||0,deaths:parseInt(inputs[2].value,10)||0,assists:parseInt(inputs[3].value,10)||0,acs:parseInt(inputs[4].value,10)||0}
+    if(pid){_sb.from('players').update(d).eq('id',pid).then(function(r){if(r.error)_log('Error player: '+r.error.message);else _log('Jugador guardado')})}
+    else{_sb.from('players').insert(d).select().single().then(function(r){if(r.data)div.dataset.pid=r.data.id})}
   }
 
   function apply(d){
@@ -122,15 +204,14 @@
       })
     })
 
+    var tabMap={teams:'tab-teams',match:'tab-match',timer:'tab-timer',players:'tab-players',lowerthird:'tab-lowerthird',mvp:'tab-mvp',break:'tab-break',tools:'tab-tools'}
     document.querySelectorAll('.tab').forEach(function(t){
       t.addEventListener('click',function(){
         document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('act')})
         document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('act')})
         this.classList.add('act')
-        var id=this.dataset.tab
-        if(id==='teams')$('tab-teams').classList.add('act')
-        else if(id==='match')$('tab-match').classList.add('act')
-        else if(id==='tools')$('tab-tools').classList.add('act')
+        var id=tabMap[this.dataset.tab]
+        if(id&&$(id))$(id).classList.add('act')
       })
     })
 
@@ -181,6 +262,65 @@
         var inp=document.createElement('input');inp.value=u;document.body.appendChild(inp);inp.select();document.execCommand('copy');document.body.removeChild(inp);_log('Link copiado')
       }
     })
+    $('tmStart').addEventListener('click',function(){
+      if(!_mid)return
+      _sb.from('timer_state').update({running:true,elapsed:0,duration:parseInt($('tmDur').value,10)||300}).eq('match_id',_mid).then(function(r){if(r.error)_log('Error: '+r.error.message);else _log('Timer iniciado')})
+    })
+    $('tmPause').addEventListener('click',function(){
+      if(!_mid)return
+      _sb.from('timer_state').update({running:false}).eq('match_id',_mid).then(function(r){if(r.error)_log('Error: '+r.error.message);else _log('Timer pausado')})
+    })
+    $('tmReset').addEventListener('click',function(){
+      if(!_mid)return
+      _sb.from('timer_state').update({running:false,elapsed:0,duration:parseInt($('tmDur').value,10)||300}).eq('match_id',_mid).then(function(r){if(r.error)_log('Error: '+r.error.message);else _log('Timer reseteado')})
+    })
+    $('tmLbl').addEventListener('change',function(){saveTimer()})
+    $('tmDur').addEventListener('change',function(){saveTimer()})
+
+    $('ltShow').addEventListener('click',function(){
+      saveLowerThird({title:$('ltTitle').value,subtitle:$('ltSubtitle').value,visible:true})
+    })
+    $('ltHide').addEventListener('click',function(){
+      saveLowerThird({visible:false})
+    })
+    $('ltTitle').addEventListener('keyup',function(){
+      saveLowerThird({title:this.value,subtitle:$('ltSubtitle').value,visible:true})
+    })
+    $('ltSubtitle').addEventListener('keyup',function(){
+      saveLowerThird({title:$('ltTitle').value,subtitle:this.value,visible:true})
+    })
+
+    $('mvpShow').addEventListener('click',function(){
+      saveMvp({player_name:$('mvpPlayer').value,team_name:$('mvpTeam').value,stat_line:$('mvpStat').value,visible:true})
+    })
+    $('mvpHide').addEventListener('click',function(){
+      saveMvp({visible:false})
+    })
+    $('mvpPlayer').addEventListener('keyup',function(){
+      saveMvp({player_name:this.value,team_name:$('mvpTeam').value,stat_line:$('mvpStat').value,visible:true})
+    })
+    $('mvpTeam').addEventListener('keyup',function(){
+      saveMvp({player_name:$('mvpPlayer').value,team_name:this.value,stat_line:$('mvpStat').value,visible:true})
+    })
+    $('mvpStat').addEventListener('keyup',function(){
+      saveMvp({player_name:$('mvpPlayer').value,team_name:$('mvpTeam').value,stat_line:this.value,visible:true})
+    })
+
+    $('brkShow').addEventListener('click',function(){
+      saveBreak({title:$('brkTitle').value,subtitle:$('brkSubtitle').value,timer_seconds:parseInt($('brkTimer').value,10)||120,visible:true,timer_running:false})
+    })
+    $('brkHide').addEventListener('click',function(){
+      saveBreak({visible:false,timer_running:false})
+    })
+    $('brkTimerStart').addEventListener('click',function(){
+      if(!_mid)return
+      _sb.from('break_screen').update({timer_running:true,timer_seconds:parseInt($('brkTimer').value,10)||120}).eq('match_id',_mid).then(function(r){if(r.error)_log('Error: '+r.error.message);else _log('Timer iniciado')})
+    })
+    $('brkTimerStop').addEventListener('click',function(){
+      if(!_mid)return
+      _sb.from('break_screen').update({timer_running:false}).eq('match_id',_mid).then(function(r){if(r.error)_log('Error: '+r.error.message);else _log('Timer detenido')})
+    })
+
     $('importFile').addEventListener('change',function(e){
       var f=e.target.files[0];if(!f)return
       var rd=new FileReader()
