@@ -82,6 +82,19 @@ text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;transition:all .2s;
 .gr input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#6B2FA0,#BB86FC);cursor:pointer;border:2px solid rgba(255,255,255,0.05)}
 .rng-hint{font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:0.3px;margin-top:2px}
 
+#createScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:18px}
+.create-box{background:linear-gradient(135deg,rgba(15,0,30,0.9),rgba(25,0,50,0.9));border:1px solid rgba(107,47,160,0.2);border-radius:20px;padding:40px 50px;text-align:center;box-shadow:0 8px 60px rgba(0,0,0,0.4),0 0 80px rgba(107,47,160,0.05);max-width:440px;width:100%;position:relative;overflow:hidden}
+.create-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#BB86FC 20%,#FFD700 50%,#E74C3C 80%,transparent)}
+.create-box h2{font-size:13px;text-transform:uppercase;letter-spacing:3px;color:#BB86FC;font-weight:700;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:8px}
+.create-box h2 i{width:18px;height:18px}
+#createTitle{width:100%;background:rgba(0,0,0,0.45);border:1px solid rgba(107,47,160,0.15);border-radius:10px;padding:14px 16px;color:#fff;font-size:16px;outline:none;transition:all .2s;text-align:center;font-family:inherit;margin-bottom:14px}
+#createTitle:focus{border-color:rgba(155,89,182,0.5);box-shadow:0 0 25px rgba(155,89,182,0.12)}
+#createTitle::placeholder{color:rgba(255,255,255,0.15)}
+#createBtn{width:100%;padding:14px;background:linear-gradient(135deg,#6B2FA0,#BB86FC);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:3px;cursor:pointer;transition:all .2s;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 25px rgba(155,89,182,0.2)}
+#createBtn:hover{box-shadow:0 6px 40px rgba(155,89,182,0.35);transform:translateY(-2px)}
+#createBtn:active{transform:translateY(0)}
+#createBtn i{width:18px;height:18px}
+
 @media(max-width:600px){
   body{padding:15px 10px}
   .row{flex-direction:column;gap:8px}
