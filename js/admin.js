@@ -88,9 +88,17 @@
         var f=e.target.files[0];if(!f)return
         var rd=new FileReader(),pid=inp.dataset.p
         rd.onload=function(ev){
-          var du=ev.target.result
-          $(''+pid).src=du
-          autosave()
+          var img=new Image()
+          img.onload=function(){
+            var max=200,c=document.createElement('canvas'),ctx=c.getContext('2d')
+            var w=img.width,h=img.height
+            if(w>max||h>max){if(w>h){c.width=max;c.height=Math.round(h*(max/w))}else{c.height=max;c.width=Math.round(w*(max/h))}}
+            else{c.width=w;c.height=h}
+            ctx.drawImage(img,0,0,c.width,c.height)
+            $(''+pid).src=c.toDataURL('image/webp',0.85)
+            autosave()
+          }
+          img.src=ev.target.result
         }
         rd.readAsDataURL(f)
       })
@@ -148,7 +156,10 @@
     try{if(typeof supabase!=='undefined'){
       _sb=supabase.createClient(_su,_sk)
       _ch=_sb.channel('scoreboard')
-      _ch.subscribe(function(s){if(s==='SUBSCRIBED')_log('Supabase conectado')})
+      _ch.on('broadcast',{event:'sync_request'},function(){broadcast(gs())})
+      _ch.subscribe(function(s){
+        if(s==='SUBSCRIBED'){_log('Supabase conectado');broadcast(gs())}
+      })
     }}catch(e){}
   })
 })();

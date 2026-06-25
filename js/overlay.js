@@ -22,9 +22,10 @@
           mt:gp('mt')||D.mt,ms:gp('ms')||D.ms,mm:gp('mm')||D.mm,
           ww:parseInt(gp('ww'))||D.ww
         }
+        try{localStorage.setItem(K,JSON.stringify(h))}catch(e){}
         return h
       }
-      return null
+      var r=localStorage.getItem(K);return r?JSON.parse(r):null
     }catch(e){return null}
   }
 
@@ -63,7 +64,7 @@
     P={t1s:d.t1s,t2s:d.t2s,t1n:d.t1n,t2n:d.t2n,t1l:d.t1l,t2l:d.t2l}
   }
 
-  function refresh(){var d=load();if(d)render(d)}
+  function refresh(){var d=load()||D;render(d)}
 
   document.addEventListener('DOMContentLoaded',function(){
     $('wl1').addEventListener('load',function(){this.style.opacity='1'})
@@ -94,9 +95,16 @@
       _sb=supabase.createClient(_su,_sk)
       _ch=_sb.channel('scoreboard')
       _ch.on('broadcast',{event:'update'},function(m){
+        try{localStorage.setItem(K,JSON.stringify(m.payload))}catch(e){}
         render(m.payload)
       })
-      _ch.subscribe()
+      _ch.on('broadcast',{event:'sync'},function(m){
+        try{localStorage.setItem(K,JSON.stringify(m.payload))}catch(e){}
+        render(m.payload)
+      })
+      _ch.subscribe(function(s){
+        if(s==='SUBSCRIBED')_ch.send({type:'broadcast',event:'sync_request',payload:{}})
+      })
     }}catch(e){}
   })
 })();
