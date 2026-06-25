@@ -4,6 +4,9 @@
   var D={t1n:'QU4SAR',t1s:0,t1l:'assets/logos/team1.svg',t2n:'OPPONENT',t2s:0,t2l:'assets/logos/team2.svg',mt:'SCRIM OFICIAL',ms:'BO3',mm:'',ww:110};
   var P={t1s:-1,t2s:-1};
   var _PL=false;
+  var _su='https://oyrhhnibxdbnthozcrsw.supabase.co'
+  var _sk='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95cmhobmlieGRibnRob3pjcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMzU5NzQsImV4cCI6MjA5NzkxMTk3NH0.Hc4ddnIIQJQp6K9iCAXqSFK39c3dLuHdg87EXYOJZcg'
+  var _sb,_ch
 
   function $(i){return document.getElementById(i)}
 
@@ -86,5 +89,16 @@
       r.onload=function(ev){try{var d=JSON.parse(ev.target.result);localStorage.setItem(K,JSON.stringify(d));refresh()}catch(e){}}
       r.readAsText(f)
     })
+
+    try{if(typeof supabase!=='undefined'){
+      _sb=supabase.createClient(_su,_sk)
+      _ch=_sb.channel('scoreboard')
+      _ch.on('broadcast',{event:'update'},function(m){
+        var d=m.payload
+        localStorage.setItem(K,JSON.stringify(d))
+        render(d)
+      })
+      _ch.subscribe()
+    }}catch(e){}
   })
 })();

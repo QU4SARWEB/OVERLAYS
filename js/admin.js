@@ -5,6 +5,9 @@
 
   var _bc;
   var _ow;
+  var _su='https://oyrhhnibxdbnthozcrsw.supabase.co'
+  var _sk='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95cmhobmlieGRibnRob3pjcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMzU5NzQsImV4cCI6MjA5NzkxMTk3NH0.Hc4ddnIIQJQp6K9iCAXqSFK39c3dLuHdg87EXYOJZcg'
+  var _sb,_ch
 
   function $(i){return document.getElementById(i)}
 
@@ -14,6 +17,7 @@
     if(!_bc)try{_bc=new BroadcastChannel(C)}catch(e){}
     if(_bc)try{_bc.postMessage({type:'update',data:d})}catch(e){}
     if(_ow&&!_ow.closed)try{_ow.postMessage({type:'update',data:d},'*')}catch(e){}
+    if(_ch)try{_ch.send({type:'broadcast',event:'update',payload:d})}catch(e){}
   }
 
   function save(d){
@@ -134,5 +138,11 @@
       rd.onload=function(ev){try{var d=JSON.parse(ev.target.result);apply(d);autosave();_log('Importado')}catch(e){var st=$('status');st.textContent='JSON inv\u00e1lido';st.className='st err'}}
       rd.readAsText(f)
     })
+
+    try{if(typeof supabase!=='undefined'){
+      _sb=supabase.createClient(_su,_sk)
+      _ch=_sb.channel('scoreboard')
+      _ch.subscribe(function(s){if(s==='SUBSCRIBED')_log('Supabase conectado')})
+    }}catch(e){}
   })
 })();
