@@ -9,11 +9,20 @@
 </head>
 <body>
 
-<div class="w">
+<div class="w" id="createScreen">
+  <h1>&#10022; QU4SAR &#10022;</h1>
+  <p class="sub">Panel de Control — Scoreboard</p>
+  <div class="create-box">
+    <h2><i data-lucide="trophy"></i> Crear Torneo / Scrim</h2>
+    <input type="text" id="createTitle" placeholder="T&iacute;tulo (ej: SCRIM OFICIAL)">
+    <button id="createBtn"><i data-lucide="plus-circle"></i> Crear</button>
+  </div>
+</div>
+
+<div class="w" id="adminPanel" style="display:none">
   <h1>&#10022; QU4SAR &#10022;</h1>
   <p class="sub">Panel de Control — Scoreboard</p>
 
-  <!-- LIVE PREVIEW -->
   <div class="preview-wrap" id="preview">
     <span class="pv-label">Vista previa</span>
     <span class="pv-mt" id="pv-mt">SCRIM OFICIAL</span>
@@ -27,14 +36,12 @@
     </div>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
     <div class="tab act" data-tab="teams"><i data-lucide="users"></i> Equipos</div>
     <div class="tab" data-tab="match"><i data-lucide="gamepad-2"></i> Partida</div>
     <div class="tab" data-tab="tools"><i data-lucide="settings-2"></i> Herramientas</div>
   </div>
 
-  <!-- TAB: TEAMS -->
   <div class="tab-content act" id="tab-teams">
     <div class="card">
       <div class="card-title"><i data-lucide="sword"></i> Equipo 1 — QU4SAR</div>
@@ -60,7 +67,7 @@
           <label>Logo</label>
           <div class="logo-upload">
             <img id="pr1" src="assets/logos/team1.svg" alt="">
-            <label><i data-lucide="image-plus"></i> Subir<input type="file" accept="image/*" data-p="pr1" data-l="tl1"></label>
+            <label><i data-lucide="image-plus"></i> Subir<input type="file" accept="image/*" data-p="pr1" data-t="1"></label>
           </div>
         </div>
       </div>
@@ -90,7 +97,7 @@
           <label>Logo</label>
           <div class="logo-upload">
             <img id="pr2" src="assets/logos/team2.svg" alt="">
-            <label><i data-lucide="image-plus"></i> Subir<input type="file" accept="image/*" data-p="pr2" data-l="tl2"></label>
+            <label><i data-lucide="image-plus"></i> Subir<input type="file" accept="image/*" data-p="pr2" data-t="2"></label>
           </div>
         </div>
       </div>
@@ -108,7 +115,6 @@
     </div>
   </div>
 
-  <!-- TAB: MATCH -->
   <div class="tab-content" id="tab-match">
     <div class="card">
       <div class="card-title"><i data-lucide="info"></i> Informaci&oacute;n de la Partida</div>
@@ -128,7 +134,7 @@
             <option value="BIND">Bind</option>
             <option value="HAVEN">Haven</option>
             <option value="SPLIT">Split</option>
-            <option value="ICEBOX" selected>Icebox</option>
+            <option value="ICEBOX">Icebox</option>
             <option value="BREEZE">Breeze</option>
             <option value="FRACTURE">Fracture</option>
             <option value="PEARL">Pearl</option>
@@ -142,7 +148,6 @@
     </div>
   </div>
 
-  <!-- TAB: TOOLS -->
   <div class="tab-content" id="tab-tools">
     <div class="card">
       <div class="card-title"><i data-lucide="zap"></i> Acciones</div>
@@ -153,16 +158,14 @@
         <button class="btn btn-s" id="shareBtn" style="min-width:140px"><i data-lucide="link"></i> Copiar Link</button>
         <button class="btn btn-s" id="openOverlayBtn" style="min-width:120px"><i data-lucide="external-link"></i> Abrir Overlay</button>
         <button class="btn btn-d" id="resetBtn" style="min-width:120px"><i data-lucide="rotate-ccw"></i> Reset Scores</button>
-        <button class="btn btn-d" id="clearBtn" style="min-width:120px"><i data-lucide="trash-2"></i> Limpiar Datos</button>
       </div>
     </div>
     <div class="card">
       <div class="card-title"><i data-lucide="book-open-text"></i> Instrucciones</div>
       <p style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.8">
-        Los cambios se guardan autom&aacute;ticamente y se sincronizan en tiempo real v&iacute;a Supabase.<br>
+        Todo se guarda en Supabase y se sincroniza en tiempo real.<br>
         Para usar en OBS: copi&aacute; el link con <strong>Copiar Link</strong> y pegalo en un <strong>Browser Source</strong>.<br>
-        Funciona desde cualquier navegador/dispositivo, no necesit&aacute;s tener el admin abierto.<br>
-        Usa <strong>Exportar</strong> para obtener un JSON de respaldo.
+        Los cambios se reflejan al instante.
       </p>
     </div>
   </div>
