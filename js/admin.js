@@ -116,13 +116,14 @@
     })
     $('importBtn').addEventListener('click',function(){$('importFile').click()})
     $('openOverlayBtn').addEventListener('click',function(){
-      _ow=window.open('overlay.html'+location.search+(location.search?'&':'?')+'t1s='+$('t1s').value+'&t2s='+$('t2s').value,'qu4sar_overlay')
+      var base='https://qu4sarweb.github.io/OVERLAYS/overlay.html'
+      _ow=window.open(base+'?t1s='+$('t1s').value+'&t2s='+$('t2s').value,'qu4sar_overlay')
       _log('Overlay abierto')
       var d=gs();save(d)
     })
     $('shareBtn').addEventListener('click',function(){
       var d=gs()
-      var url='overlay.html?t1n='+encodeURIComponent(d.t1n)+'&t1s='+d.t1s+'&t2n='+encodeURIComponent(d.t2n)+'&t2s='+d.t2s+'&mt='+encodeURIComponent(d.mt)+'&ms='+encodeURIComponent(d.ms)+'&mm='+encodeURIComponent(d.mm)+'&ww='+d.ww
+      var url='https://qu4sarweb.github.io/OVERLAYS/overlay.html?t1n='+encodeURIComponent(d.t1n)+'&t1s='+d.t1s+'&t2n='+encodeURIComponent(d.t2n)+'&t2s='+d.t2s+'&mt='+encodeURIComponent(d.mt)+'&ms='+encodeURIComponent(d.ms)+'&mm='+encodeURIComponent(d.mm)+'&ww='+d.ww
       try{navigator.clipboard.writeText(url).then(function(){_log('Link copiado')})}catch(e){
         var inp=document.createElement('input');inp.value=url;document.body.appendChild(inp);inp.select();document.execCommand('copy');document.body.removeChild(inp);_log('Link copiado')
       }

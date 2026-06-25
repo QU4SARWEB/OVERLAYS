@@ -65,6 +65,7 @@
   document.addEventListener('DOMContentLoaded',function(){
     $('wl1').addEventListener('load',function(){this.style.opacity='1'})
     $('wl2').addEventListener('load',function(){this.style.opacity='1'})
+    render(D)
     refresh()
     setInterval(refresh,1200)
     window.addEventListener('storage',function(e){if(e.key===K)refresh()})
