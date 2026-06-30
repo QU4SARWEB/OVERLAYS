@@ -3,43 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QU4SAR Overlays</title>
+<title>QU4SAR Scoreboard</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:system-ui,sans-serif;background:#0d0b1a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:1.5rem;padding:2rem}
+  body{font-family:system-ui,sans-serif;background:#0d0b1a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:2rem}
   h1{font-size:2rem;background:linear-gradient(135deg,#a855f7,#eab308);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;max-width:900px;width:100%}
-  .card{padding:1.2rem;border-radius:14px;text-decoration:none;color:#fff;font-weight:600;text-align:center;transition:.2s;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)}
-  .card:hover{transform:scale(1.03);filter:brightness(1.1);border-color:rgba(187,134,252,0.3)}
-  .card.purple{background:rgba(124,58,237,0.15);border-color:rgba(124,58,237,0.3)}
-  .card.gold{background:rgba(234,179,8,0.12);border-color:rgba(234,179,8,0.25)}
-  .card .icon{font-size:1.5rem;display:block;margin-bottom:6px}
-  .card small{display:block;font-size:.75rem;color:rgba(255,255,255,0.35);font-weight:400;margin-top:4px}
-  .section-title{color:rgba(255,255,255,0.3);font-size:.8rem;text-transform:uppercase;letter-spacing:2px;margin-top:1rem}
-  p{color:#888;font-size:.8rem}
+  .links{display:flex;gap:2rem}
+  .links a{padding:.8rem 2rem;border-radius:12px;text-decoration:none;font-weight:600;transition:.2s}
+  .overlay-link{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
+  .admin-link{background:linear-gradient(135deg,#eab308,#f59e0b);color:#000}
+  .links a:hover{transform:scale(1.05);filter:brightness(1.1)}
+  p{color:#888;font-size:.85rem}
   p a{color:#a855f7}
-  @media(max-width:600px){.grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<h1>&#10022; QU4SAR &#10022;</h1>
-<p style="color:rgba(255,255,255,0.3);font-size:.9rem;margin-top:-.5rem">Sistema de Overlays</p>
-
-<div class="section-title">Overlays (OBS Browser Source)</div>
-<div class="grid">
-  <a class="card purple" href="overlay.html" target="_blank"><span class="icon">&#9654;</span> Scoreboard<small>Marcador principal</small></a>
-  <a class="card" href="timer-overlay.html" target="_blank"><span class="icon">&#9202;</span> Timer<small>Cuenta regresiva</small></a>
-  <a class="card" href="player-cards-overlay.html" target="_blank"><span class="icon">&#128101;</span> Player Cards<small>Estad&iacute;sticas de jugadores</small></a>
-  <a class="card" href="lower-third-overlay.html" target="_blank"><span class="icon">&#128196;</span> Lower Third<small>Texto inferior</small></a>
-  <a class="card" href="mvp-overlay.html" target="_blank"><span class="icon">&#127942;</span> MVP<small>Jugador destacado</small></a>
-  <a class="card" href="break-overlay.html" target="_blank"><span class="icon">&#9208;</span> Break Screen<small>Pantalla de pausa</small></a>
+<h1>QU4SAR Scoreboard</h1>
+<div class="links">
+  <a class="overlay-link" href="overlay.html" target="_blank">Overlay</a>
+  <a class="admin-link" href="admin.html" target="_blank">Admin Panel</a>
 </div>
-
-<div class="section-title">Administraci&oacute;n</div>
-<div class="grid">
-  <a class="card gold" href="admin.html" target="_blank"><span class="icon">&#9881;</span> Panel de Control<small>Administrar todo</small></a>
-</div>
-
-<p style="margin-top:2rem"><a href="https://github.com/QU4SARWEB/OVERLAYS" target="_blank">GitHub</a></p>
+<p><a href="https://github.com/QU4SARWEB/OVERLAYS" target="_blank">GitHub</a></p>
 </body>
 </html>
