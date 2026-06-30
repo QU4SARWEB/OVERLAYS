@@ -1,4 +1,5 @@
 (function(){
+  console.log('[QU4SAR] Admin loading');
   var K='qu4sar_scoreboard';
   var C='qu4sar_channel';
   var D={t1n:'QU4SAR',t1s:0,t1l:'assets/logos/team1.svg',t2n:'OPPONENT',t2s:0,t2l:'assets/logos/team2.svg',mt:'SCRIM OFICIAL',ms:'BO3',mm:'',ww:110};
